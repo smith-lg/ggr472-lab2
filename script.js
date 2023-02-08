@@ -11,7 +11,7 @@ var map = new mapboxgl.Map({
 
 //After map load event, add data sources and draw layers
 map.on('load', () => {
-    
+
     /*ADDING A SOURCE FROM A GEOJSON FILE*/
     map.addSource('uoft', {
         type: 'geojson',
@@ -50,25 +50,33 @@ map.on('load', () => {
     map.addSource('toronto-mus', {
         type: 'geojson',
         data: 'https://smith-lg.github.io/ggr472-lab2/data/torontomusicvenues.geojson'
-        //'https://raw.githubusercontent.com/smith-lg/demo/main/data/torontomusicvenues.geojson'
+        //'https://raw.githubusercontent.com/smith-lg/ggr472-lab2/main/data/torontomusicvenues.geojson'
+
     });
 
+    //Draw GeoJSON as circles
     map.addLayer({
-        'id': 'toronto-mus-fill',
+        'id': 'toronto-mus-pnts',
         'type': 'circle',
         'source': 'toronto-mus',
-        // 'layout': {
-        //     'text-field': ['get', 'name'],
-        //     'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
-        //     'text-radial-offset': 0.5,
-        //     'text-justify': 'auto',
-        //     'icon-image': ['get', 'icon']
-        // },
         'paint': {
             'circle-radius': 5,
             'circle-color': 'blue'
         }
 
+    });
+
+    //Draw GeoJSON labels using 'name' property
+    map.addLayer({
+        'id': 'toronto-mus-labels',
+        'type': 'symbol',
+        'source': 'toronto-mus',
+        'layout': {
+            'text-field': ['get', 'name'],
+            'text-variable-anchor': ['bottom'],
+            'text-radial-offset': 0.5,
+            'text-justify': 'auto'
+        }
     });
 
     /*ADDING A SOURCE FROM A MAPBOX TILESET - DATA YOU UPLOADED TO MAPBOX STUDIO*/
@@ -106,7 +114,7 @@ map.on('load', () => {
         },
         'source-layer': 'torontoct-7n3sj5' //get this from mapbox tileset page
     },
-        'uoft-buildings' 
+        'uoft-buildings'
         //Drawing order - places layer below points
         //Here the addlayer method takes 2 arguments (the layer as an object and a string for another layer's name)
         //If the other layer already exists, the new layer will be drawn before that one
