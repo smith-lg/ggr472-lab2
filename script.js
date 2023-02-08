@@ -49,7 +49,8 @@ map.on('load', () => {
     //GeoJSON must direct to URL 
     map.addSource('toronto-mus', {
         type: 'geojson',
-        data: 'https://raw.githubusercontent.com/smith-lg/demo/main/data/torontomusicvenues.geojson'
+        data: 'https://smith-lg.github.io/ggr472-lab2/data/torontomusicvenues.geojson'
+        //'https://raw.githubusercontent.com/smith-lg/demo/main/data/torontomusicvenues.geojson'
     });
 
     map.addLayer({
